@@ -18,3 +18,17 @@ Algorithms:
   * parse: String -> URLString
   * canonicalize: URLString -> ParsedURL
   * resolve: ParsedURL x String -> ParsedURL
+
+== Parsing a URL ==
+
+Input: spec, a String
+Output: a URLString
+
+If /spec/ contains a ":" character,
+  consume characters of /spec/ up to, but no including, the first ":"
+  character.
+Otherwise,
+  consime all the characters of /spec/.
+Let /scheme/ be the consumed characters.
+
+
