@@ -1,0 +1,4 @@
+Copyright (C) 2010, Adam Barth.  All rights reserved.
+
+Note: I'll probably make this document available under a more liberal license
+      in the future.  At the moment, however, no such license is available.
