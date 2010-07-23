@@ -2,3 +2,19 @@ Copyright (C) 2010, Adam Barth.  All rights reserved.
 
 Note: I'll probably make this document available under a more liberal license
       in the future.  At the moment, however, no such license is available.
+
+Data structures:
+  * String -- A sequence of unicode characters
+  * URLString -- A sequence of unicode characters segemented into the various
+        components of a URL (scheme, user, password, host, port, path, query,
+        and fragment).
+  * ParsedURL -- A sequence of unicode characters segemented into the various
+        parts of a URL (scheme, user, password, host, port, path, query, and
+        fragment).  A ParsedURL differs from a URLString in that each component
+        of the string (and the characters between the components) has been
+        canonicalized.
+
+Algorithms:
+  * parse: String -> URLString
+  * canonicalize: URLString -> ParsedURL
+  * resolve: ParsedURL x String -> ParsedURL
