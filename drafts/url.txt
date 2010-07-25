@@ -109,3 +109,52 @@ characters are the /user/.
 Consume the ":" character.
 
 The remaining charaters are the /password/.
+
+== Canonicalizing a URL ==
+
+Input: url, a URLString
+Output: a ParsedURL
+
+If /url/ has a empty scheme,
+-> Output the empty string and abort these steps.  FIXME: Really?
+
+Output the /canonicalized scheme/.
+
+Output ":".
+
+If /url/ has a non-empty authority,
+-> Output "//" and the /canonicalized authority/.
+
+FIXME: What should we do if there's no authority but there are later parts?
+"http:?foo#bar" or "http:;/bar" ?
+
+Output the /canonicalized path/.
+
+If /url/ has a non-empty query,
+-> Output "?" and the /canonicalized query/.
+
+If /url/ has a non-empty fragment,
+-> Output "#" and the /canonicalized fragment/.
+
+=== Canonicalized Scheme ===
+
+Output the scheme, converted to lower case.
+
+=== Canonicalized Authority ===
+
+If the /url/ has a non-empty user-info,
+  -> output the /canonicalized user-info/ and the "@" character.
+
+Output the host, converted to lower case.  FIXME: There's a lot more we need to
+do here.  For example, punycode and the escaping table.
+
+FIXME: What about canonicalizing representations of IP addresses?  IPv6?
+
+=== Canonicalized User-Info ===
+
+Output the user.
+
+If /url/ has a password,
+  -> output ":" and the password.
+
+FIXME: Is there a table for escaping these parts?
