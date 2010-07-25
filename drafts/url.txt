@@ -19,16 +19,93 @@ Algorithms:
   * canonicalize: URLString -> ParsedURL
   * resolve: ParsedURL x String -> ParsedURL
 
+== Definitions ==
+
+A /control character/ is a character whose value is less than or equal to
+U+0020 (" ").
+
+A /slash character/ is either U+???? ("/") or U+???? ("\").
+
+An /authority terminating characters/ is either X, Y, or Z.
+
+During a parsing algorithm, let the /remaining string/ be the characters of
+/spec/ that have not yet been consumed.
+
 == Parsing a URL ==
 
 Input: spec, a String
 Output: a URLString
 
-If /spec/ contains a ":" character,
-  consume characters of /spec/ up to, but no including, the first ":"
-  character.
-Otherwise,
-  consime all the characters of /spec/.
-Let /scheme/ be the consumed characters.
+=== Phase 1 ===
 
+Trim all the leading and trailing control characters from /spec/.
 
+If the remaining string does not contain a ":" character,
+  -> the entire remaining string is the /scheme/.  Abort these steps.
+
+Consume characters up to, but not including, the first ":" character.  These
+characters are the /scheme/.
+
+Consume the ":" character.
+
+Consume any number of slash characters.
+
+If the remaining string does not contain any authority terminating
+characters,
+  -> the entire remaining string is the /authority/.  Abort these steps.
+
+Consume characters up to, but not including, the first authority terminating
+character.  The consumed characters are /authority/.
+
+If the remaining string does not contain a "?" character,
+  -> the entire remaining string is the /path/.  Abort these steps.
+
+Consume characters up to, but not including, the first "?" charcter.  The
+consumed characters are /path/.
+
+Consume the "?" character.
+
+If the remaining string does not contain a "#" character,
+  -> the entire remaining string is the /query/.  Abort these steps.
+
+Consume characters up to, but not including, the first "#" charcter.  The
+consumed characters are /query/.
+
+Consume the "#" character.
+
+The remaining string is the /fragment/.
+
+=== Phase 2 ===
+
+Input: authority, a String
+Output: ???
+
+If the remaining string contains an "@" character,
+  -> consume characters up to, but not including the "@" character.  The
+  consumed characters are the /user-info/.  Consume the "@" character.
+
+If the remaining string does not contain an ":" character,
+  -> the entire remaining string is the /host/.  Abort these steps.
+
+Consume characters up to, but not including, the ":" character.  The consumed
+characters are the /host/.
+
+Consume the ":" character.
+
+The remaining charaters are the /port/.  FIXME: Isn't there some funny business
+here regarding digits?
+
+=== Phase 3 ===
+
+Input: user-info, a String
+Output: ???
+
+If the remaining string does not contain a ":" character,
+  -> the entire remaining string is the /user/.
+
+Consume characters up to, but not including, the ":" character.  The consumed
+characters are the /user/.
+
+Consume the ":" character.
+
+The remaining charaters are the /password/.
