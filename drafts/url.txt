@@ -26,7 +26,8 @@ U+0020 (" ").
 
 A /slash character/ is either U+???? ("/") or U+???? ("\").
 
-An /authority terminating characters/ is either X, Y, or Z.
+An /authority terminating characters/ is either a slash charcter, U+???? ("?"),
+U+???? ("#"), or U+???? (";").
 
 During a parsing algorithm, let the /remaining string/ be the characters of
 /spec/ that have not yet been consumed.
@@ -41,7 +42,8 @@ Output: a URLString
 Trim all the leading and trailing control characters from /spec/.
 
 If the remaining string does not contain a ":" character,
-  -> the entire remaining string is the /scheme/.  Abort these steps.
+  -> the entire remaining string is the /scheme/ (TODO: Reall?).  Abort these
+     steps.
 
 Consume characters up to, but not including, the first ":" character.  These
 characters are the /scheme/.
