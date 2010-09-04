@@ -3,22 +3,6 @@ Copyright (C) 2010, Adam Barth.  All rights reserved.
 Note: I'll probably make this document available under a more liberal license
       in the future.  At the moment, however, no such license is available.
 
-Data structures:
-  * String -- A sequence of unicode characters
-  * URLString -- A sequence of unicode characters segemented into the various
-        components of a URL (scheme, user, password, host, port, path, query,
-        and fragment).
-  * ParsedURL -- A sequence of unicode characters segemented into the various
-        parts of a URL (scheme, user, password, host, port, path, query, and
-        fragment).  A ParsedURL differs from a URLString in that each component
-        of the string (and the characters between the components) has been
-        canonicalized.
-
-Algorithms:
-  * parse: String -> URLString
-  * canonicalize: URLString -> ParsedURL
-  * resolve: ParsedURL x String -> ParsedURL
-
 == Definitions ==
 
 A /control character/ is a character whose value is less than or equal to
@@ -29,47 +13,83 @@ A /slash character/ is either U+???? ("/") or U+???? ("\").
 An /authority terminating characters/ is either a slash charcter, U+???? ("?"),
 U+???? ("#"), or U+???? (";").
 
-During a parsing algorithm, let the /remaining string/ be the characters of
-/spec/ that have not yet been consumed.
+During a parsing algorithm, the /remaining string/ are the characters of the
+input that have not yet been consumed.
 
 == Parsing a URL ==
 
-Input: spec, a String
-Output: a URLString
+Given a string of characters, find the scheme, as described in Section ??.
 
-=== Phase 1 ===
+If the URL is invalid:
+  -> Abort these steps.
 
-Trim all the leading and trailing control characters from /spec/.
+If the scheme is a single upper or lower case ASCII character:
+  -> TODO: Windows drive specs!
 
-If the remaining string does not contain a ":" character,
-  -> the entire remaining string is the /scheme/ (TODO: Really?).  Abort these
-     steps.
+If the scheme is a ASCII case-insensitive match for "file":
+  -> TODO: File URLs!
+
+If the scheme is a ASCII case-insensitive match for "mailto":
+  -> TODO: I think mailto URLs are special, but more testing is required.
+
+If the scheme is a hierarchical:
+  -> In the after-scheme, if any, find the authority, path, query, and
+     fragment, as decribed in Section ??.
+
+  -> In the authority, if any, find the user information, host, and port, as
+     described in Section ??.
+
+  -> In the user-info, if any, find the user name and password, as described in
+     Section ??.
+
+  -> Abort these steps.
+
+The remaining string is the /path/.
+
+=== Finding the scheme ==
+
+Consume all leading and trailing control characters.
+
+If the remaining string does not contain a ":" character:
+  -> The URL is invalid.
+
+  -> Abort these steps.
 
 Consume characters up to, but not including, the first ":" character.  These
 characters are the /scheme/.
 
 Consume the ":" character.
 
+The reamining characters are the /after-scheme/.
+
+=== Finding the authority, path, query, and fragment ===
+
 Consume any number of slash characters.
 
 If the remaining string does not contain any authority terminating
-characters,
-  -> the entire remaining string is the /authority/.  Abort these steps.
+characters:
+  -> The remaining string is the /authority/.
+
+  -> Abort these steps.
 
 Consume characters up to, but not including, the first authority terminating
 character.  The consumed characters are /authority/.
 
-If the remaining string does not contain a "?" character or a "# character,
-  -> the entire remaining string is the /path/.  Abort these steps.
+If the remaining string does not contain a "?" character or a "# character:
+  -> The remaining string is the /path/.
+
+  -> Abort these steps.
 
 Consume characters up to, but not including, the first "?" or "#" charcter.
 The consumed characters are the /path/.
 
-If the first remaining charater is a "?" character:
+If the first character of the remaining string is a "?" character:
   -> Consume the "?" character.
 
-  -> If the remaining string does not contain a "#" character,
-       -> the entire remaining string is the /query/.  Abort these steps.
+  -> If the remaining string does not contain a "#" character:
+       -> The remaining string is the /query/.
+       
+       -> Abort these steps.
 
   -> Consume characters up to, but not including, the first "#" charcter.  The
      consumed characters are the /query/.
@@ -78,92 +98,43 @@ Consume the "#" character.
 
 The remaining string is the /fragment/.
 
-=== Phase 2 ===
+=== Finding the user information, host, and port ===
 
-Input: authority, a String
-Output: ???
-
-If the remaining string contains an "@" character,
-  -> consume characters up to, but not including the *last* "@" character.  The
+If the remaining string contains an "@" character:
+  -> Consume characters up to, but not including the *last* "@" character.  The
      consumed characters are the /user-info/.
 
   -> Consume the "@" character.
 
-If the remaining string does not contain an ":" character,
-  -> the entire remaining string is the /host/.  Abort these steps.
+If the remaining string does not contain an ":" character:
+  -> The remaining string is the /host/.
 
-If the first remaining character is a "[" character, the remaining string
-contains a "]" character, and the last ":" occurs before the last "]"
-character,
-  -> the entire remaining string is the /host/.  Abort these steps.
+  -> Abort these steps.
 
-Consume characters up to, but not including, the last ":" character.  The consumed
-characters are the /host/.
+If the first character of the remaining string is a "[" character, the
+remaining string contains a "]" character, and the last ":" character in the
+remaining string occurs before the last "]" character in the remaining string:
+  -> The remaining string is the /host/.
+
+  -> Abort these steps.
+
+Consume characters up to, but not including, the last ":" character.  The
+consumed characters are the /host/.
 
 Consume the ":" character.
 
-The remaining charaters are the /port/.
+The remaining string is the /port/.
 
-=== Phase 3 ===
+=== Find the user name and password ===
 
-Input: user-info, a String
-Output: ???
+If the remaining string does not contain a ":" character:
+  -> The remaining string is the /user/.
 
-If the remaining string does not contain a ":" character,
-  -> the entire remaining string is the /user/.
+  -> Abort these steps.
 
 Consume characters up to, but not including, the first ":" character.  The
 consumed characters are the /user/.
 
 Consume the ":" character.
 
-The remaining charaters are the /password/.
-
-== Canonicalizing a URL ==
-
-Input: url, a URLString
-Output: a ParsedURL
-
-If /url/ has a empty scheme,
--> Output the empty string and abort these steps.  FIXME: Really?
-
-Output the /canonicalized scheme/.
-
-Output ":".
-
-If /url/ has a non-empty authority,
--> Output "//" and the /canonicalized authority/.
-
-FIXME: What should we do if there's no authority but there are later parts?
-"http:?foo#bar" or "http:;/bar" ?
-
-Output the /canonicalized path/.
-
-If /url/ has a non-empty query,
--> Output "?" and the /canonicalized query/.
-
-If /url/ has a non-empty fragment,
--> Output "#" and the /canonicalized fragment/.
-
-=== Canonicalized Scheme ===
-
-Output the scheme, converted to lower case.
-
-=== Canonicalized Authority ===
-
-If the /url/ has a non-empty user-info,
-  -> output the /canonicalized user-info/ and the "@" character.
-
-Output the host, converted to lower case.  FIXME: There's a lot more we need to
-do here.  For example, punycode and the escaping table.
-
-FIXME: What about canonicalizing representations of IP addresses?  IPv6?
-
-=== Canonicalized User-Info ===
-
-Output the user.
-
-If /url/ has a password,
-  -> output ":" and the password.
-
-FIXME: Is there a table for escaping these parts?
+The remaining string are the /password/.
