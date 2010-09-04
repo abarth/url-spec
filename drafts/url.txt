@@ -59,19 +59,20 @@ characters,
 Consume characters up to, but not including, the first authority terminating
 character.  The consumed characters are /authority/.
 
-If the remaining string does not contain a "?" character,
+If the remaining string does not contain a "?" character or a "# character,
   -> the entire remaining string is the /path/.  Abort these steps.
 
-Consume characters up to, but not including, the first "?" charcter.  The
-consumed characters are /path/.
+Consume characters up to, but not including, the first "?" or "#" charcter.
+The consumed characters are the /path/.
 
-Consume the "?" character.
+If the first remaining charater is a "?" character:
+  -> Consume the "?" character.
 
-If the remaining string does not contain a "#" character,
-  -> the entire remaining string is the /query/.  Abort these steps.
+  -> If the remaining string does not contain a "#" character,
+       -> the entire remaining string is the /query/.  Abort these steps.
 
-Consume characters up to, but not including, the first "#" charcter.  The
-consumed characters are /query/.
+  -> Consume characters up to, but not including, the first "#" charcter.  The
+     consumed characters are the /query/.
 
 Consume the "#" character.
 
