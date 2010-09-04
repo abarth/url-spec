@@ -42,7 +42,7 @@ Output: a URLString
 Trim all the leading and trailing control characters from /spec/.
 
 If the remaining string does not contain a ":" character,
-  -> the entire remaining string is the /scheme/ (TODO: Reall?).  Abort these
+  -> the entire remaining string is the /scheme/ (TODO: Really?).  Abort these
      steps.
 
 Consume characters up to, but not including, the first ":" character.  These
@@ -84,19 +84,25 @@ Input: authority, a String
 Output: ???
 
 If the remaining string contains an "@" character,
-  -> consume characters up to, but not including the "@" character.  The
-  consumed characters are the /user-info/.  Consume the "@" character.
+  -> consume characters up to, but not including the *last* "@" character.  The
+     consumed characters are the /user-info/.
+
+  -> Consume the "@" character.
 
 If the remaining string does not contain an ":" character,
   -> the entire remaining string is the /host/.  Abort these steps.
 
-Consume characters up to, but not including, the ":" character.  The consumed
+If the first remaining character is a "[" character, the remaining string
+contains a "]" character, and the last ":" occurs before the last "]"
+character,
+  -> the entire remaining string is the /host/.  Abort these steps.
+
+Consume characters up to, but not including, the last ":" character.  The consumed
 characters are the /host/.
 
 Consume the ":" character.
 
-The remaining charaters are the /port/.  FIXME: Isn't there some funny business
-here regarding digits?
+The remaining charaters are the /port/.
 
 === Phase 3 ===
 
