@@ -112,8 +112,8 @@ Output: ???
 If the remaining string does not contain a ":" character,
   -> the entire remaining string is the /user/.
 
-Consume characters up to, but not including, the ":" character.  The consumed
-characters are the /user/.
+Consume characters up to, but not including, the first ":" character.  The
+consumed characters are the /user/.
 
 Consume the ":" character.
 
