@@ -137,4 +137,4 @@ consumed characters are the /user/.
 
 Consume the ":" character.
 
-The remaining string are the /password/.
+The remaining string is the /password/.
