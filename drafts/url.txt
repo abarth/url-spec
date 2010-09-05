@@ -3,6 +3,20 @@ Copyright (C) 2010, Adam Barth.  All rights reserved.
 Note: I'll probably make this document available under a more liberal license
       in the future.  At the moment, however, no such license is available.
 
+== Open Issues ==
+
+* Browsers parse URLs differently depending on which operating system they're
+  running on.  The problem is that they want to do sensible things for file
+  paths, but file paths look different on Windows and Unix systems.
+
+* How should we handle cases where browsers disaggree with the regular
+  exression in RFC 3986?  Currently, this document aims to describe how
+  browsers behave, but we'll likely need to compare that to RFC 3986 at some
+  point.  Some specific differences that have been brought up on the mailing
+  list:
+    - http:///example.com/
+    - http://example.com;
+
 == Definitions ==
 
 A /control character/ is a character whose value is less than or equal to
