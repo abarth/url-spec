@@ -182,6 +182,10 @@ The resolved URL is spec parsed as an absolute URL.
 
 Given a string /spec/ and a ParsedURL /base-url/...
 
+TODO: If base-url's scheme is not hierarchical, we can't resolve as a relative
+URL.  We'll probably want to return an invalid URL.  Check what happens when
+resolving an empty string as a relative URL with a non-hierarchical base.
+
 If spec is empty:
   -> The resolved URL is identical to base-url, with the fragment, if any,
      removed.
