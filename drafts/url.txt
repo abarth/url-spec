@@ -46,7 +46,7 @@ If the scheme is a ASCII case-insensitive match for "file":
 If the scheme is a ASCII case-insensitive match for "mailto":
   -> TODO: I think mailto URLs are special, but more testing is required.
 
-If the scheme is a hierarchical:
+If the scheme is hierarchical:
   -> In the after-scheme, if any, find the authority, path, query, and
      fragment, as decribed in Section ??.
 
@@ -152,3 +152,53 @@ consumed characters are the /user/.
 Consume the ":" character.
 
 The remaining string is the /password/.
+
+== Resolving a string relative to a base URL ==
+
+Given a string /spec/ and a ParsedURL /base-url/, find the scheme of spec.
+
+If spec is an invalid URL:
+  -> The resolved URL is spec resolved as relative URL.
+
+  -> Abort these steps.
+
+If spec's scheme contains any characters which are not "valid scheme
+characters" (TODO: Define valid scheme characters):
+  -> The resolved URL is spec resolved as relative URL.
+
+  -> Abort these steps.
+
+If base-url's scheme is an ASCII case insensitive match for spec's scheme and
+the shared scheme is hierarchical:
+  -> The resolved URL is spec's after-scheme resolved as a relative URL.
+
+  -> Abort these steps.
+
+The resolved URL is spec parsed as an absolute URL.
+
+=== Resolving a string as a relative URL ===
+
+Given a string /spec/ and a ParsedURL /base-url/...
+
+If spec is empty:
+  -> The resolved URL is identical to base-url, with the fragment, if any,
+     removed.
+
+  -> Abort these steps.
+
+If the first character of spec is a slash character:
+  -> Resolve spec as a host-relative URL.
+
+  -> Abort these steps.
+
+If the first character of spec is a "?" character:
+  -> Resolve spec as a query-relative URL.
+
+  -> Abort these steps.
+
+If the first character of spec is a "#" character:
+  -> Resolve spec as a fragment-relative URL.
+
+  -> Abort these steps.
+
+Resolve spec as a path-relative URL.
