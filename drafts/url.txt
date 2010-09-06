@@ -192,7 +192,7 @@ If the first character of spec is a slash character:
      -> The resolved URL is spec resolved as a scheme-relative URL.
 
      Otherwise:
-     -> The resolved URL is spec resolved as a host-relative URL.
+     -> The resolved URL is spec resolved as an authority-relative URL.
 
   -> Abort these steps.
 
@@ -207,3 +207,51 @@ If the first character of spec is a "#" character:
   -> Abort these steps.
 
 The resolved URL is spec resolved as a path-relative URL.
+
+=== Resolving a string as a scheme-relative URL ===
+
+Given a string /spec/ and a ParsedURL /base-url/, let resolved-url be
+  * base-url's scheme
+  * concatenated with ":",
+  * concatenated with spec.
+
+The resolved URL is resolved-url parsed as an absolute URL.
+
+=== Resolving a string as an authority-relative URL ===
+
+Given a string /spec/ and a ParsedURL /base-url/, let resolved-url be
+  * base-url's scheme
+  * concatenated with "://",
+  * concatenated with base-url's authority,
+  * concatenated with spec.
+
+The resolved URL is resolved-url parsed as an absolute URL.
+
+=== Resolving a string as a query-relative URL ===
+
+Given a string /spec/ and a ParsedURL /base-url/, let resolved-url be
+  * base-url's scheme
+  * concatenated with "://",
+  * concatenated with base-url's authority,
+  * concatenated with base-url's path,
+  * concatenated with spec.
+
+The resolved URL is resolved-url parsed as an absolute URL.
+
+=== Resolving a string as a fragment-relative URL ===
+
+Given a string /spec/ and a ParsedURL /base-url/, let resolved-url be
+  * base-url's scheme
+  * concatenated with "://",
+  * concatenated with base-url's authority,
+  * concatenated with base-url's path,
+  * concatenated with "?",
+  * concatenated with base-url's query,
+  * concatenated with spec.
+
+The resolved URL is resolved-url parsed as an absolute URL.
+
+=== Resolving a string as a path-relative URL ===
+
+TODO: Handle path-relative URLs.  This requires a bunch of path and do
+semantics.
