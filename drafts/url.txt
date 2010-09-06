@@ -157,6 +157,8 @@ The remaining string is the /password/.
 
 Given a string /spec/ and a ParsedURL /base-url/, find the scheme of spec.
 
+TODO: We probably need to trim leading and trailing control characters.
+
 If spec is an invalid URL:
   -> The resolved URL is spec resolved as relative URL.
 
