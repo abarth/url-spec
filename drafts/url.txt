@@ -10,7 +10,7 @@ Note: I'll probably make this document available under a more liberal license
   paths, but file paths look different on Windows and Unix systems.
 
 * How should we handle cases where browsers disaggree with the regular
-  exression in RFC 3986?  Currently, this document aims to describe how
+  expression in RFC 3986?  Currently, this document aims to describe how
   browsers behave, but we'll likely need to compare that to RFC 3986 at some
   point.  Some specific differences that have been brought up on the mailing
   list:
