@@ -187,18 +187,23 @@ If spec is empty:
   -> Abort these steps.
 
 If the first character of spec is a slash character:
-  -> Resolve spec as a host-relative URL.
+  -> If spec has at least two characters and the second character is also a
+     slash character:
+     -> The resolved URL is spec resolved as a scheme-relative URL.
+
+     Otherwise:
+     -> The resolved URL is spec resolved as a host-relative URL.
 
   -> Abort these steps.
 
 If the first character of spec is a "?" character:
-  -> Resolve spec as a query-relative URL.
+  -> The resolved URL is spec resolved as a query-relative URL.
 
   -> Abort these steps.
 
 If the first character of spec is a "#" character:
-  -> Resolve spec as a fragment-relative URL.
+  -> The resolved URL is spec resolved as a fragment-relative URL.
 
   -> Abort these steps.
 
-Resolve spec as a path-relative URL.
+The resolved URL is spec resolved as a path-relative URL.
