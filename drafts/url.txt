@@ -259,5 +259,5 @@ The resolved URL is resolved-url parsed as an absolute URL.
 
 === Resolving a string as a path-relative URL ===
 
-TODO: Handle path-relative URLs.  This requires a bunch of path and do
+TODO: Handle path-relative URLs.  This requires a bunch of path and dot
 semantics.
