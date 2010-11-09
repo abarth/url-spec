@@ -24,6 +24,7 @@
       URLs.  The behavior specified in this document might or might not match
       any particular browser, but browsers might be well-served by adopting the
       behavior defined herein.</t>
+    </abstract>
     <note title="Editorial Note (To be removed by RFC Editor)">
       <t>If you have suggestions for improving this document, please send
       email to <eref target="mailto:public-iri@w3.org" />.  Further Working
@@ -43,7 +44,7 @@
       browsers behave, but we'll likely need to compare that to RFC 3986 at
       some point.  Some specific differences that have been brought up on the
       mailing list:
-      <list style="bullets">
+      <list style="symbols">
         <t>http:///example.com/</t>
         <t>http://example.com;</t>
       </list>
@@ -238,7 +239,7 @@
         <t>-> The resolved URL is spec resolved as relative URL.</t>
 
         <t>-> Abort these steps.</t>
-      <list>
+      </list>
       </t>
 
       <t>If spec's scheme contains any characters which are not "valid scheme
@@ -318,7 +319,7 @@
       <section title="Resolving a string as a scheme-relative URL">
         <t>Given a string /spec/ and a ParsedURL /base-url/, let resolved-url
         be
-        <list style="bullets">
+        <list style="symbols">
           <t>base-url's scheme</t>
           <t>concatenated with ":",</t>
           <t>concatenated with spec.</t>
@@ -329,7 +330,7 @@
       </section>
       <section title="Resolving a string as an authority-relative URL">
         <t>Given a string /spec/ and a ParsedURL /base-url/, let resolved-url be
-        <list style="bullets">
+        <list style="symbols">
           <t>base-url's scheme</t>
           <t>concatenated with "://",</t>
           <t>concatenated with base-url's authority,</t>
@@ -342,7 +343,7 @@
       <section title="Resolving a string as a query-relative URL">
         <t>Given a string /spec/ and a ParsedURL /base-url/, let resolved-url
         be
-        <list style="bullets">
+        <list style="symbols">
           <t>base-url's scheme</t>
           <t>concatenated with "://",</t>
           <t>concatenated with base-url's authority,</t>
