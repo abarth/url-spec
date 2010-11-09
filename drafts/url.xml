@@ -209,126 +209,175 @@
 
         <t>The remaining string is the /port/.</t>
       </section>
+      <section title="Find the user name and password">
+        <t>If the remaining string does not contain a ":" character:
+        <list>
+          <t>-> The remaining string is the /user/.</t>
 
-=== Find the user name and password ===
+          <t>-> Abort these steps.</t>
+        </list>
+        </t>
 
-If the remaining string does not contain a ":" character:
-  -> The remaining string is the /user/.
+        <t>Consume characters up to, but not including, the first ":"
+        character.  The consumed characters are the /user/.</t>
 
-  -> Abort these steps.
+        <t>Consume the ":" character.</t>
 
-Consume characters up to, but not including, the first ":" character.  The
-consumed characters are the /user/.
+        <t>The remaining string is the /password/.</t>
+      </section>
+    </section>
+    <section title="Resolving a string relative to a base URL">
+      <t>Given a string /spec/ and a ParsedURL /base-url/, find the scheme of
+      spec.</t>
 
-Consume the ":" character.
+      <t>TODO: We probably need to trim leading and trailing control
+      characters.</t>
 
-The remaining string is the /password/.
+      <t>If spec is an invalid URL:
+      <list>
+        <t>-> The resolved URL is spec resolved as relative URL.</t>
 
-== Resolving a string relative to a base URL ==
+        <t>-> Abort these steps.</t>
+      <list>
+      </t>
 
-Given a string /spec/ and a ParsedURL /base-url/, find the scheme of spec.
+      <t>If spec's scheme contains any characters which are not "valid scheme
+      characters" (TODO: Define valid scheme characters):
+      <list>
+        <t>-> The resolved URL is spec resolved as relative URL.</t>
 
-TODO: We probably need to trim leading and trailing control characters.
+        <t>-> Abort these steps.</t>
+      </list>
+      </t>
 
-If spec is an invalid URL:
-  -> The resolved URL is spec resolved as relative URL.
+      <t>If base-url's scheme is an ASCII case insensitive match for spec's
+      scheme and the shared scheme is hierarchical:
+      <list>
+        <t>-> The resolved URL is spec's after-scheme resolved as a relative
+        URL.</t>
 
-  -> Abort these steps.
+        <t>-> Abort these steps.</t>
+      </list>
+      </t>
 
-If spec's scheme contains any characters which are not "valid scheme
-characters" (TODO: Define valid scheme characters):
-  -> The resolved URL is spec resolved as relative URL.
+      <t>The resolved URL is spec parsed as an absolute URL.</t>
 
-  -> Abort these steps.
+      <section title="Resolving a string as a relative URL">
+        <t>Given a string /spec/ and a ParsedURL /base-url/...</t>
 
-If base-url's scheme is an ASCII case insensitive match for spec's scheme and
-the shared scheme is hierarchical:
-  -> The resolved URL is spec's after-scheme resolved as a relative URL.
+        <t>TODO: If base-url's scheme is not hierarchical, we can't resolve as
+        a relative URL.  We'll probably want to return an invalid URL.  Check
+        what happens when resolving an empty string as a relative URL with a
+        non-hierarchical base.</t>
 
-  -> Abort these steps.
+        <t>If spec is empty:
+        <list>
+          <t>-> The resolved URL is identical to base-url, with the fragment,
+          if any, removed.</t>
 
-The resolved URL is spec parsed as an absolute URL.
+          <t>-> Abort these steps.</t>
+        </list>
+        </t>
 
-=== Resolving a string as a relative URL ===
+        <t>If the first character of spec is a slash character:
+        <list>
+          <t>-> If spec has at least two characters and the second character is
+          also a slash character:
+          <list>
+            <t>-> The resolved URL is spec resolved as a scheme-relative URL.</t>
+          </list>
+          Otherwise:
+          <list>
+            <t>-> The resolved URL is spec resolved as an authority-relative URL.</t>
+          </list>
+          </t>
 
-Given a string /spec/ and a ParsedURL /base-url/...
+          <t>-> Abort these steps.</t>
+        </list>
+        </t>
 
-TODO: If base-url's scheme is not hierarchical, we can't resolve as a relative
-URL.  We'll probably want to return an invalid URL.  Check what happens when
-resolving an empty string as a relative URL with a non-hierarchical base.
+        <t>If the first character of spec is a "?" character:
+        <list>
+          <t>-> The resolved URL is spec resolved as a query-relative URL.</t>
 
-If spec is empty:
-  -> The resolved URL is identical to base-url, with the fragment, if any,
-     removed.
+          <t>-> Abort these steps.</t>
+        </list>
+        </t>
 
-  -> Abort these steps.
+        <t>If the first character of spec is a "#" character:
+        <list>
+          <t>-> The resolved URL is spec resolved as a fragment-relative
+          URL.</t>
 
-If the first character of spec is a slash character:
-  -> If spec has at least two characters and the second character is also a
-     slash character:
-     -> The resolved URL is spec resolved as a scheme-relative URL.
+          <t>-> Abort these steps.</t>
+        </list>
+        </t>
 
-     Otherwise:
-     -> The resolved URL is spec resolved as an authority-relative URL.
+        <t>The resolved URL is spec resolved as a path-relative URL.</t>
+      </section>
+      <section title="Resolving a string as a scheme-relative URL">
+        <t>Given a string /spec/ and a ParsedURL /base-url/, let resolved-url
+        be
+        <list style="bullets">
+          <t>base-url's scheme</t>
+          <t>concatenated with ":",</t>
+          <t>concatenated with spec.</t>
+        </list>
+        </t>
 
-  -> Abort these steps.
+        <t>The resolved URL is resolved-url parsed as an absolute URL.</t>
+      </section>
+      <section title="Resolving a string as an authority-relative URL">
+        <t>Given a string /spec/ and a ParsedURL /base-url/, let resolved-url be
+        <list style="bullets">
+          <t>base-url's scheme</t>
+          <t>concatenated with "://",</t>
+          <t>concatenated with base-url's authority,</t>
+          <t>concatenated with spec.</t>
+        </list>
+        </t>
 
-If the first character of spec is a "?" character:
-  -> The resolved URL is spec resolved as a query-relative URL.
+        <t>The resolved URL is resolved-url parsed as an absolute URL.</t>
+      </section>
+      <section title="Resolving a string as a query-relative URL">
+        <t>Given a string /spec/ and a ParsedURL /base-url/, let resolved-url
+        be
+        <list style="bullets">
+          <t>base-url's scheme</t>
+          <t>concatenated with "://",</t>
+          <t>concatenated with base-url's authority,</t>
+          <t>concatenated with base-url's path,</t>
+          <t>concatenated with spec.</t>
+        </list>
+        </t>
 
-  -> Abort these steps.
+        <t>The resolved URL is resolved-url parsed as an absolute URL.</t>
+      </section>
+      <section title="Resolving a string as a fragment-relative URL">
+        <t>Given a string /spec/ and a ParsedURL /base-url/, let resolved-url
+        be
+        <list>
+          <t>base-url's scheme</t>
+          <t>concatenated with "://",</t>
+          <t>concatenated with base-url's authority,</t>
+          <t>concatenated with base-url's path,</t>
+          <t>concatenated with "?",</t>
+          <t>concatenated with base-url's query,</t>
+          <t>concatenated with spec.</t>
+        </list>
+        </t>
 
-If the first character of spec is a "#" character:
-  -> The resolved URL is spec resolved as a fragment-relative URL.
-
-  -> Abort these steps.
-
-The resolved URL is spec resolved as a path-relative URL.
-
-=== Resolving a string as a scheme-relative URL ===
-
-Given a string /spec/ and a ParsedURL /base-url/, let resolved-url be
-  * base-url's scheme
-  * concatenated with ":",
-  * concatenated with spec.
-
-The resolved URL is resolved-url parsed as an absolute URL.
-
-=== Resolving a string as an authority-relative URL ===
-
-Given a string /spec/ and a ParsedURL /base-url/, let resolved-url be
-  * base-url's scheme
-  * concatenated with "://",
-  * concatenated with base-url's authority,
-  * concatenated with spec.
-
-The resolved URL is resolved-url parsed as an absolute URL.
-
-=== Resolving a string as a query-relative URL ===
-
-Given a string /spec/ and a ParsedURL /base-url/, let resolved-url be
-  * base-url's scheme
-  * concatenated with "://",
-  * concatenated with base-url's authority,
-  * concatenated with base-url's path,
-  * concatenated with spec.
-
-The resolved URL is resolved-url parsed as an absolute URL.
-
-=== Resolving a string as a fragment-relative URL ===
-
-Given a string /spec/ and a ParsedURL /base-url/, let resolved-url be
-  * base-url's scheme
-  * concatenated with "://",
-  * concatenated with base-url's authority,
-  * concatenated with base-url's path,
-  * concatenated with "?",
-  * concatenated with base-url's query,
-  * concatenated with spec.
-
-The resolved URL is resolved-url parsed as an absolute URL.
-
-=== Resolving a string as a path-relative URL ===
-
-TODO: Handle path-relative URLs.  This requires a bunch of path and dot
-semantics.
+        <t>The resolved URL is resolved-url parsed as an absolute URL.</t>
+      </section>
+      <section title="Resolving a string as a path-relative URL">
+        <t>TODO: Handle path-relative URLs.  This requires a bunch of path and
+        dot semantics.</t>
+      </section>
+    </section>
+  </middle>
+  <back>
+    <section title="Acknowledgements">
+      <t>TODO</t>
+    </section>
+  </back>
+</rfc>
