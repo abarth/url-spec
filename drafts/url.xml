@@ -137,58 +137,78 @@
         </list>
         </t>
 
-Consume characters up to, but not including, the first authority terminating
-character.  The consumed characters are /authority/.
+        <t>Consume characters up to, but not including, the first authority
+        terminating character.  The consumed characters are /authority/.</t>
 
-If the remaining string does not contain a "?" character or a "# character:
-  -> The remaining string is the /path/.
+        <t>If the remaining string does not contain a "?" character or a "#
+        character:
+        <list>
+          <t>-> The remaining string is the /path/.</t>
 
-  -> Abort these steps.
+          <t>-> Abort these steps.</t>
+        </list>
+        </t>
 
-Consume characters up to, but not including, the first "?" or "#" charcter.
-The consumed characters are the /path/.
+        <t>Consume characters up to, but not including, the first "?" or "#"
+        charcter.  The consumed characters are the /path/.</t>
 
-If the first character of the remaining string is a "?" character:
-  -> Consume the "?" character.
+        <t>If the first character of the remaining string is a "?" character:
+        <list>
+          <t>-> Consume the "?" character.</t>
 
-  -> If the remaining string does not contain a "#" character:
-       -> The remaining string is the /query/.
+          <t>-> If the remaining string does not contain a "#" character:
+          <list>
+            <t>-> The remaining string is the /query/.</t>
        
-       -> Abort these steps.
+            <t>-> Abort these steps.</t>
+          </list>
+          </t>
 
-  -> Consume characters up to, but not including, the first "#" charcter.  The
-     consumed characters are the /query/.
+          <t>-> Consume characters up to, but not including, the first "#"
+          charcter.  The consumed characters are the /query/.</t>
+        </list>
+        </t>
 
-Consume the "#" character.
+        <t>Consume the "#" character.</t>
 
-The remaining string is the /fragment/.
+        <t>The remaining string is the /fragment/.</t>
+      </section>
+      <section title="Finding the user information, host, and port">
+        <t>If the remaining string contains an "@" character:
+        <list>
+          <t>-> Consume characters up to, but not including the *last* "@"
+          character.  The consumed characters are the /user-info/.</t>
 
-=== Finding the user information, host, and port ===
+          <t>-> Consume the "@" character.</t>
+        </list>
+        </t>
 
-If the remaining string contains an "@" character:
-  -> Consume characters up to, but not including the *last* "@" character.  The
-     consumed characters are the /user-info/.
+        <t>If the remaining string does not contain an ":" character:
+        <list>
+          <t>-> The remaining string is the /host/.</t>
 
-  -> Consume the "@" character.
+          <t>-> Abort these steps.</t>
+        </list>
+        </t>
 
-If the remaining string does not contain an ":" character:
-  -> The remaining string is the /host/.
+        <t>If the first character of the remaining string is a "[" character,
+        the remaining string contains a "]" character, and the last ":"
+        character in the remaining string occurs before the last "]" character
+        in the remaining string:
+        <list>
+          <t>-> The remaining string is the /host/.</t>
 
-  -> Abort these steps.
+          <t>-> Abort these steps.</t>
+        </list>
+        </t>
 
-If the first character of the remaining string is a "[" character, the
-remaining string contains a "]" character, and the last ":" character in the
-remaining string occurs before the last "]" character in the remaining string:
-  -> The remaining string is the /host/.
+        <t>Consume characters up to, but not including, the last ":" character.
+        The consumed characters are the /host/.</t>
 
-  -> Abort these steps.
+        <t>Consume the ":" character.</t>
 
-Consume characters up to, but not including, the last ":" character.  The
-consumed characters are the /host/.
-
-Consume the ":" character.
-
-The remaining string is the /port/.
+        <t>The remaining string is the /port/.</t>
+      </section>
 
 === Find the user name and password ===
 
