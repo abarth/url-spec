@@ -357,7 +357,7 @@
       <section title="Resolving a string as a fragment-relative URL">
         <t>Given a string /spec/ and a ParsedURL /base-url/, let resolved-url
         be
-        <list>
+        <list style="symbols">
           <t>base-url's scheme</t>
           <t>concatenated with "://",</t>
           <t>concatenated with base-url's authority,</t>
