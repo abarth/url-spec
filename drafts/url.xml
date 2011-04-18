@@ -63,10 +63,13 @@
       of the input that have not yet been consumed.</t>
     </section>
     <section title="Parsing a URL">
-      <t>Given a string of characters, find the scheme, as described in Section
-      ??.</t>
+      <t>Given a string of characters, consume all leading and trailing control
+      characters.</t>
 
-      <t>If the URL is invalid:
+      <t>Find the scheme, as described in Section ??.</t>
+
+      <t>If the algorithm for finding the scheme determines that the URL is
+      invalid:
       <list>
         <t>-> Abort these steps.</t>
       </list>
@@ -94,10 +97,10 @@
       <t>If the scheme is hierarchical:
       <list>
         <t>-> In the after-scheme, if any, find the authority, path, query, and
-        fragment, as decribed in Section ??.</t>
+        fragment, as described in Section ??.</t>
 
-        <t>-> In the authority, if any, find the user information, host, and
-        port, as described in Section ??.</t>
+        <t>-> In the authority, if any, find the user-info, host, and port, as
+        described in Section ??.</t>
 
         <t>-> In the user-info, if any, find the user name and password, as
         described in Section ??.</t>
@@ -106,11 +109,9 @@
       </list>
       </t>
 
-      <t>The remaining string is the /path/.</t>
+      <t>The remaining string is the path.</t>
 
       <section title="Finding the scheme">
-        <t>Consume all leading and trailing control characters.</t>
-
         <t>If the remaining string does not contain a ":" character:
         <list>
           <t>-> The URL is invalid.</t>
@@ -120,11 +121,11 @@
         </t>
 
         <t>Consume characters up to, but not including, the first ":"
-        character.  These characters are the /scheme/.</t>
+        character.  These characters are the scheme.</t>
 
         <t>Consume the ":" character.</t>
 
-        <t>The reamining characters are the /after-scheme/.</t>
+        <t>The remaining characters are the after-scheme.</t>
       </section>
       <section title="Finding the authority, path, query, and fragment">
         <t>Consume any number of slash characters.</t>
@@ -132,26 +133,26 @@
         <t>If the remaining string does not contain any authority terminating
         characters:
         <list>
-          <t>-> The remaining string is the /authority/.</t>
+          <t>-> The remaining string is the authority.</t>
 
           <t>-> Abort these steps.</t>
         </list>
         </t>
 
         <t>Consume characters up to, but not including, the first authority
-        terminating character.  The consumed characters are /authority/.</t>
+        terminating character.  The consumed characters are authority.</t>
 
-        <t>If the remaining string does not contain a "?" character or a "#
+        <t>If the remaining string does not contain a "?" character or a "#"
         character:
         <list>
-          <t>-> The remaining string is the /path/.</t>
+          <t>-> The remaining string is the path.</t>
 
           <t>-> Abort these steps.</t>
         </list>
         </t>
 
         <t>Consume characters up to, but not including, the first "?" or "#"
-        charcter.  The consumed characters are the /path/.</t>
+        charcter.  The consumed characters are the path.</t>
 
         <t>If the first character of the remaining string is a "?" character:
         <list>
@@ -159,26 +160,26 @@
 
           <t>-> If the remaining string does not contain a "#" character:
           <list>
-            <t>-> The remaining string is the /query/.</t>
-       
+            <t>-> The remaining string is the query.</t>
+
             <t>-> Abort these steps.</t>
           </list>
           </t>
 
           <t>-> Consume characters up to, but not including, the first "#"
-          charcter.  The consumed characters are the /query/.</t>
+          charcter.  The consumed characters are the query.</t>
         </list>
         </t>
 
         <t>Consume the "#" character.</t>
 
-        <t>The remaining string is the /fragment/.</t>
+        <t>The remaining string is the fragment.</t>
       </section>
-      <section title="Finding the user information, host, and port">
+      <section title="Finding the user-info, host, and port">
         <t>If the remaining string contains an "@" character:
         <list>
           <t>-> Consume characters up to, but not including the *last* "@"
-          character.  The consumed characters are the /user-info/.</t>
+          character.  The consumed characters are the user-info.</t>
 
           <t>-> Consume the "@" character.</t>
         </list>
@@ -186,7 +187,7 @@
 
         <t>If the remaining string does not contain an ":" character:
         <list>
-          <t>-> The remaining string is the /host/.</t>
+          <t>-> The remaining string is the host.</t>
 
           <t>-> Abort these steps.</t>
         </list>
@@ -197,34 +198,34 @@
         character in the remaining string occurs before the last "]" character
         in the remaining string:
         <list>
-          <t>-> The remaining string is the /host/.</t>
+          <t>-> The remaining string is the host.</t>
 
           <t>-> Abort these steps.</t>
         </list>
         </t>
 
         <t>Consume characters up to, but not including, the last ":" character.
-        The consumed characters are the /host/.</t>
+        The consumed characters are the host.</t>
 
         <t>Consume the ":" character.</t>
 
-        <t>The remaining string is the /port/.</t>
+        <t>The remaining string is the port.</t>
       </section>
       <section title="Find the user name and password">
         <t>If the remaining string does not contain a ":" character:
         <list>
-          <t>-> The remaining string is the /user/.</t>
+          <t>-> The remaining string is the user name.</t>
 
           <t>-> Abort these steps.</t>
         </list>
         </t>
 
         <t>Consume characters up to, but not including, the first ":"
-        character.  The consumed characters are the /user/.</t>
+        character.  The consumed characters are the user name.</t>
 
         <t>Consume the ":" character.</t>
 
-        <t>The remaining string is the /password/.</t>
+        <t>The remaining string is the password.</t>
       </section>
     </section>
     <section title="Resolving a string relative to a base URL">
