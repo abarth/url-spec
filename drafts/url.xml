@@ -51,16 +51,17 @@
       </t>
     </section>
     <section title="Definitions">
-      <t>A /control character/ is a character whose value is less than or equal
+      <t>A control character is a character whose value is less than or equal
       to U+0020 (" ").</t>
 
-      <t>A /slash character/ is either U+???? ("/") or U+???? ("\").</t>
+      <t>A slash character is either U+???? ("/") or U+???? ("\").</t>
 
       <t>An /authority terminating characters/ is either a slash charcter,
-      U+???? ("?"), U+???? ("#"), or U+???? (";").</t>
+      U+???? ("?"), U+???? ("#"), or U+???? (";").  TODO: Why is ";" on this
+      list?</t>
 
-      <t>During a parsing algorithm, the /remaining string/ are the characters
-      of the input that have not yet been consumed.</t>
+      <t>During a parsing algorithm, the remaining string is the characters of
+      the input that have not yet been consumed.</t>
     </section>
     <section title="Parsing a URL">
       <t>Given a string of characters, consume all leading and trailing control
@@ -75,7 +76,8 @@
       </list>
       </t>
 
-      <t>If the scheme is a single upper or lower case ASCII character:
+      <t>If the scheme is a single upper or lower case ASCII character (TODO:
+      Just ALPHA?):
       <list>
         <t>-> TODO: Windows drive specs!</t>
       </list>
@@ -377,7 +379,71 @@
       </section>
     </section>
     <section title="Canonicalizing a URL">
-      <t>TODO</t>
+      <t>This section describes how to construct a canonical version of a
+      parsed URL string.  TODO: Is there a unique canonical representation for
+      every URL?</t>
+
+      <t>Given parsed URL original-url, if original-url is invalid:
+      <list>
+        <t>-> Abort these steps.</t>
+      </list>
+      </t>
+
+      <t>TODO: Handle file URLs.</t>
+
+      <t>If the scheme is hierarchical:
+      <list>
+        <t>Output the canonicalized scheme (as described in Section ??).</t>
+
+        <t>Output "://".<t/>
+
+        <t>If the user-info is non-empty:
+        <list>
+          <t>Output the canonicalized user-info (as described in Section ??).</t>
+
+          <t>Output "@".</t>
+        </list>
+        </t>
+
+        <t>Output the canonicalized host (as described in Section ??).<t/>
+
+        <t>Let the canonicalized-port be the canonicalized port (as described
+        in Section ??).</t>
+
+        <t>If the canonicalized-port is non-empty and is not the default port
+        for the scheme:
+        <list>
+          <t>Output ":".</t>    
+
+          <t>Output the canonicalized-port.</t>
+        </list>
+        </t>
+
+        <t>Output the canonicalized path (as described in Section ??).<t/>
+
+        <t>Let the canonicalized-query be the canonicalized query (as described
+        in Section ??).</t>
+
+        <t>If the canonicalized-query is non-empty:
+        <list>
+          <t>Output "?".</t>    
+
+          <t>Output the canonicalized-query.</t>
+        </list>
+        </t>
+
+        <t>Let the canonicalized-fragment be the canonicalized fragment (as
+        described in Section ??).</t>
+
+        <t>If the canonicalized-fragment is non-empty:
+        <list>
+          <t>Output "#".</t>    
+
+          <t>Output the canonicalized-fragment.</t>
+        </list>
+        </t>
+      </list>
+      </t>
     </section>
   </middle>
   <back>
