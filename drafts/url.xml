@@ -376,6 +376,9 @@
         dot semantics.</t>
       </section>
     </section>
+    <section title="Canonicalizing a URL">
+      <t>TODO</t>
+    </section>
   </middle>
   <back>
     <section title="Acknowledgements">
