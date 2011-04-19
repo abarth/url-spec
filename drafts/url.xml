@@ -395,7 +395,7 @@
       <list>
         <t>Output the canonicalized scheme (as described in Section ??).</t>
 
-        <t>Output "://".<t/>
+        <t>Output "://".</t>
 
         <t>If the user-info is non-empty:
         <list>
@@ -405,7 +405,7 @@
         </list>
         </t>
 
-        <t>Output the canonicalized host (as described in Section ??).<t/>
+        <t>Output the canonicalized host (as described in Section ??).</t>
 
         <t>Let the canonicalized-port be the canonicalized port (as described
         in Section ??).</t>
@@ -413,20 +413,20 @@
         <t>If the canonicalized-port is non-empty and is not the default port
         for the scheme:
         <list>
-          <t>Output ":".</t>    
+          <t>Output ":".</t>
 
           <t>Output the canonicalized-port.</t>
         </list>
         </t>
 
-        <t>Output the canonicalized path (as described in Section ??).<t/>
+        <t>Output the canonicalized path (as described in Section ??).</t>
 
         <t>Let the canonicalized-query be the canonicalized query (as described
         in Section ??).</t>
 
         <t>If the canonicalized-query is non-empty:
         <list>
-          <t>Output "?".</t>    
+          <t>Output "?".</t>
 
           <t>Output the canonicalized-query.</t>
         </list>
@@ -437,13 +437,31 @@
 
         <t>If the canonicalized-fragment is non-empty:
         <list>
-          <t>Output "#".</t>    
+          <t>Output "#".</t>
 
           <t>Output the canonicalized-fragment.</t>
         </list>
         </t>
       </list>
       </t>
+      <section title="Canonicalizing a Scheme">
+        <t>TODO</t>
+      </section>
+      <section title="Canonicalizing a User-Info">
+        <t>TODO</t>
+      </section>
+      <section title="Canonicalizing a Host">
+        <t>TODO</t>
+      </section>
+      <section title="Canonicalizing a Path">
+        <t>TODO</t>
+      </section>
+      <section title="Canonicalizing a Query">
+        <t>TODO</t>
+      </section>
+      <section title="Canonicalizing a Fragment">
+        <t>TODO</t>
+      </section>
     </section>
   </middle>
   <back>
