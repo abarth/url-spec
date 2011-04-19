@@ -424,7 +424,8 @@
         <t>Let the canonicalized-query be the canonicalized query (as described
         in Section ??).</t>
 
-        <t>If the canonicalized-query is non-empty:
+        <t>If the canonicalized-query is non-empty (TODO: Distinguish between
+        empty and non-existent queries):
         <list>
           <t>Output "?".</t>
 
@@ -435,7 +436,8 @@
         <t>Let the canonicalized-fragment be the canonicalized fragment (as
         described in Section ??).</t>
 
-        <t>If the canonicalized-fragment is non-empty:
+        <t>If the canonicalized-fragment is non-empty (TODO: Distinguish
+        between empty and non-existent fragments):
         <list>
           <t>Output "#".</t>
 
@@ -464,7 +466,8 @@
           <list>
             <t>-> The scheme is invalid.</t>
 
-            <t>-> Output the %-escaping of the current character.</t>
+            <t>-> Output the utf8-percent-escaping of the current
+            character.</t>
           </list>
           </t>
         </list>
@@ -479,7 +482,8 @@
           </list>
           Otherwise:
           <list>
-            <t>-> Output the %-escaping of the current character.</t>
+            <t>-> Output the utf8-percent-escaping of the current
+            character.</t>
           </list>
           </t>
         </list>
@@ -501,7 +505,8 @@
           </list>
           Otherwise:
           <list>
-            <t>-> Output the %-escaping of the current character.</t>
+            <t>-> Output the utf8-percent-escaping of the current
+            character.</t>
           </list>
           </t>
         </list>
@@ -514,10 +519,42 @@
         <t>TODO</t>
       </section>
       <section title="Canonicalizing a Query">
-        <t>TODO</t>
+        <t>TODO: Handle the ambient encoding case.</t>
+
+        <t>Process each character of the query in sequence:
+        <list>
+          <t>If the current character is among TODO:
+          <list>
+            <t>-> Output the current character.</t>
+          </list>
+          Otherwise:
+          <list>
+            <t>-> Output the utf8-percent-escaping of the current
+            character.</t>
+          </list>
+          </t>
+        </list>
+        </t>
       </section>
       <section title="Canonicalizing a Fragment">
-        <t>TODO</t>
+        <t>Process each character of the fragment in sequence:
+        <list>
+          <t>If the current character has a Unicode value greater than or equal
+          to U+0020:
+          <list>
+            <t>-> Output the current character.</t>
+          </list>
+          Otherwise:
+          <list>
+            <t>-> Output the utf8-percent-escaping of the current
+            character.</t>
+          </list>
+          </t>
+        </list>
+        </t>
+
+        <t>Note: The above algorithm results in the canonicalized fragment
+        containing non-US-ASCII characters.</t>
       </section>
     </section>
   </middle>
