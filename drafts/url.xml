@@ -445,10 +445,67 @@
       </list>
       </t>
       <section title="Canonicalizing a Scheme">
-        <t>TODO</t>
+        <t>If the first character of the scheme is not in ALPHA, the scheme is
+        invalid.</t>
+
+        <t>Process each character of the scheme in sequence:
+        <list>
+          <t>If the current character is among ALPHA, DIGIT, "+", "-", and ".":
+          <list>
+            <t>-> Output the current character.</t>
+          </list>
+          Otherwise, if the current character is "%":
+          <list>
+            <t>-> The scheme is invalid.</t>
+
+            <t>-> Output the current character.</t>
+          </list>
+          Otherwise:
+          <list>
+            <t>-> The scheme is invalid.</t>
+
+            <t>-> Output the %-escaping of the current character.</t>
+          </list>
+          </t>
+        </list>
+        </t>
       </section>
       <section title="Canonicalizing a User-Info">
-        <t>TODO</t>
+        <t>Process each character of the username in sequence:
+        <list>
+          <t>If the current character is among TODO:
+          <list>
+            <t>-> Output the current character.</t>
+          </list>
+          Otherwise:
+          <list>
+            <t>-> Output the %-escaping of the current character.</t>
+          </list>
+          </t>
+        </list>
+        </t>
+
+        <t>If there is no password or if the password is empty:
+        <list>
+          <t>-> Abort these steps.</t>
+        </list>
+        </t>
+
+        <t>Output ":".</t>
+
+        <t>Process each character of the password in sequence:
+        <list>
+          <t>If the current character is among TODO:
+          <list>
+            <t>-> Output the current character.</t>
+          </list>
+          Otherwise:
+          <list>
+            <t>-> Output the %-escaping of the current character.</t>
+          </list>
+          </t>
+        </list>
+        </t>
       </section>
       <section title="Canonicalizing a Host">
         <t>TODO</t>
