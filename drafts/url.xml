@@ -514,6 +514,8 @@
       </section>
       <section title="Canonicalizing a Host">
         <t>TODO</t>
+
+        <t>TODO: Handle IP addresses.</t>
       </section>
       <section title="Canonicalizing a Path">
         <t>TODO</t>
