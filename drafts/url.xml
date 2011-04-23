@@ -54,7 +54,9 @@
       <t>A control character is a character whose value is less than or equal
       to U+0020 (" ").</t>
 
-      <t>A slash character is either U+???? ("/") or U+???? ("\").</t>
+      <t>A slash character is either U+???? ("/") or U+???? ("\"). TODO:
+      There's some question as to whether this is necessary for non-file
+      URLs.</t>
 
       <t>An /authority terminating characters/ is either a slash charcter,
       U+???? ("?"), U+???? ("#"), or U+???? (";").  TODO: Why is ";" on this
@@ -518,7 +520,50 @@
         <t>TODO: Handle IP addresses.</t>
       </section>
       <section title="Canonicalizing a Path">
-        <t>TODO</t>
+        <t>TODO: Do we need to ensure that path's always start with a slash
+        character?</t>
+
+        <t>If the path is empty:
+        <list>
+          <t>-> Ouput "/" and abort these steps.</t>
+        </list>
+        </t>
+
+        <figure>
+          <artwork type="abnf">
+path-escaped   = U+0000-U+0020 / U+0022-U+0023 / U+0025 / U+003C / U+003E /
+                 U+003F / U+005C / U+005E / U+0060 / U+007B-U+007D / U+007F
+path-unescaped = "-" / DIGIT / ALPHA / "_" / "~"
+          </artwork>
+        </figure>
+
+        <t>Process each character of the path in sequence:
+        <list>
+          <t>If the current character is matches path-escaped or is greater
+          than or equal to U+0080:
+          <list>
+            <t>-> Output the utf8-percent-escaping of the current
+            character.</t>
+          </list>
+          Otherwise, if the current character is ".":
+          <list>
+            <t>-> TODO: Handle "." collapsing.</t>
+          </list>
+          Otherwise, if the current character is "\":
+          <list>
+            <t>-> Output "/".</t>
+          </list>
+          Otherwise, if the current character is "%":
+          <list>
+            <t>-> TODO: Handle percent-unescaping.</t>
+          </list>
+          Otherwise:
+          <list>
+            <t>-> Output the current character.</t>
+          </list>
+          </t>
+        </list>
+        </t>
       </section>
       <section title="Canonicalizing a Query">
         <t>TODO: Handle the ambient encoding case.</t>
