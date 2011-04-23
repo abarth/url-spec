@@ -515,9 +515,48 @@
         </t>
       </section>
       <section title="Canonicalizing a Host">
-        <t>TODO</t>
-
         <t>TODO: Handle IP addresses.</t>
+
+        <t>Let unicode-host be the host-escape-normalized host (see Section ??).</t>
+
+        <t>Output result of applying the IDNA to-ascii algorithm to the
+        unicode-host. TODO: Properly reference IDNA's to-ascii algorith (we
+        might need a wrapper like we do in the cookie spec).</t>
+
+        <section title="Host Escape Normalization">
+
+          <figure>
+            <artwork type="abnf">
+host-escaped   = U+0000-U+002A / U+002C / U+002F / U+003B-U+0040 / U+005C /
+                 U+005E / U+0060 / U+007B-U+007F
+            </artwork>
+          </figure>
+
+          <t>Process each character of the host in sequence:
+          <list>
+            <t>If the current character is "%":
+            <list>
+              <t>-> TODO: Handle percent-unescaping.</t>
+            </list>
+            </t>
+
+            <t>If the current character matches host-escaped:
+            <list>
+              <t>-> Output the utf8-percent-escaping of the current
+              character.</t>
+            </list>
+            Otherwise, if the current character matches ALPHA:
+            <list>
+              <t>-> Output the current character converted to lower case.</t>
+            </list>
+            Otherwise:
+            <list>
+              <t>-> Output the current character.</t>
+            </list>
+            </t>
+          </list>
+          </t>
+        </section>
       </section>
       <section title="Canonicalizing a Path">
         <t>TODO: Do we need to ensure that path's always start with a slash
@@ -539,7 +578,7 @@ path-unescaped = "-" / DIGIT / ALPHA / "_" / "~"
 
         <t>Process each character of the path in sequence:
         <list>
-          <t>If the current character is matches path-escaped or is greater
+          <t>If the current character matches path-escaped or is greater
           than or equal to U+0080:
           <list>
             <t>-> Output the utf8-percent-escaping of the current
