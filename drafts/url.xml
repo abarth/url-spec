@@ -3,10 +3,10 @@
 <?rfc toc="yes"?>
 <?rfc symrefs="yes"?>
 <!--<!DOCTYPE rfc SYSTEM "rfc2629.dtd">-->
-<rfc ipr="trust200902" docName="draft-abarth-url-00" category="info">
+<rfc ipr="trust200902" docName="draft-abarth-url-01" category="std">
   <front>
     <title abbrev="How Browsers Process URLs">
-      How Browsers Process URLs
+      Parsing URLs for Fun and Profit
     </title>
     <author initials="A." surname="Barth" fullname="Adam Barth">
       <organization abbrev="Google, Inc.">
@@ -58,7 +58,7 @@
       There's some question as to whether this is necessary for non-file
       URLs.</t>
 
-      <t>An /authority terminating characters/ is either a slash charcter,
+      <t>An authority terminating character is either a slash charcter,
       U+???? ("?"), U+???? ("#"), or U+???? (";").  TODO: Why is ";" on this
       list?</t>
 
@@ -113,7 +113,8 @@
       </list>
       </t>
 
-      <t>The remaining string is the path.</t>
+      <t>The remaining string is the path. TODO: This might not be the best
+      approach.  We need to do more testing of data and javascript URLs.</t>
 
       <section title="Finding the scheme">
         <t>If the remaining string does not contain a ":" character:
@@ -233,8 +234,8 @@
       </section>
     </section>
     <section title="Resolving a string relative to a base URL">
-      <t>Given a string /relative-url/ and a ParsedURL /base-url/, find the scheme of
-      relative-url.</t>
+      <t>Given a string relative-url and a ParsedURL base-url, find the scheme
+      of relative-url.</t>
 
       <t>TODO: We probably need to trim leading and trailing control
       characters.</t>
@@ -269,7 +270,8 @@
       <t>The resolved URL is relative-url parsed as an absolute URL.</t>
 
       <section title="Resolving a string as a relative URL">
-        <t>Given a string /relative-url/ and a ParsedURL /base-url/...</t>
+        <t>Given a string relative-url and a ParsedURL base-url, determine the
+        resolved URL as follows:</t>
 
         <t>TODO: If base-url's scheme is not hierarchical, we can't resolve as
         a relative URL.  We'll probably want to return an invalid URL.  Check
@@ -403,8 +405,8 @@
     </section>
     <section title="Canonicalizing a URL">
       <t>This section describes how to construct a canonical version of a
-      parsed URL string.  TODO: Is there a unique canonical representation for
-      every URL?</t>
+      parsed URL string. TODO: We probably should mention somewhere that there
+      is *not* a unique canonicalization for every URL.</t>
 
       <t>Given parsed URL original-url, if original-url is invalid:
       <list>
@@ -637,7 +639,8 @@ path-unescaped = "-" / DIGIT / ALPHA / "_" / "~"
           Otherwise:
           <list>
             <t>-> Output the utf8-percent-escaping of the current
-            character.</t>
+            character. TODO: We need to handle the goofy query escaping
+            format.</t>
           </list>
           </t>
         </list>
