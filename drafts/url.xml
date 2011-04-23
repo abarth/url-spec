@@ -319,11 +319,13 @@
         </list>
         </t>
 
+        <t>TODO: Think about the case where the relative-url is empty.</t>
+
         <t>The resolved URL is relative-url resolved as a path-relative URL.</t>
       </section>
       <section title="Resolving a string as a scheme-relative URL">
-        <t>Given a string /relative-url/ and a ParsedURL /base-url/, let resolved-url
-        be
+        <t>Given a string relative-url and a ParsedURL base-url, let
+        resolved-url be
         <list style="symbols">
           <t>base-url's scheme</t>
           <t>concatenated with ":",</t>
@@ -334,7 +336,8 @@
         <t>The resolved URL is resolved-url parsed as an absolute URL.</t>
       </section>
       <section title="Resolving a string as an authority-relative URL">
-        <t>Given a string /relative-url/ and a ParsedURL /base-url/, let resolved-url be
+        <t>Given a string relative-url and a ParsedURL base-url, let
+        resolved-url be
         <list style="symbols">
           <t>base-url's scheme</t>
           <t>concatenated with "://",</t>
@@ -345,9 +348,31 @@
 
         <t>The resolved URL is resolved-url parsed as an absolute URL.</t>
       </section>
+      <section title="Resolving a string as a path-relative URL">
+        <t>TODO: Can the first character of relative-url be a slash character
+        at this point?</t>
+
+        <t>TODO: Can we assume base-url is canonicalized here so that it always
+        has at least one "/" character?</t>
+
+        <t>Let the directory-name be the characters of the base-url's path up
+        to and including the last slash character.</t>
+
+        <t>Let resolved-url be
+        <list style="symbols">
+          <t>base-url's scheme</t>
+          <t>concatenated with "://",</t>
+          <t>concatenated with base-url's authority,</t>
+          <t>concatenated with directory-name.</t>
+          <t>concatenated with relative-url.</t>
+        </list>
+        </t>
+
+        <t>The resolved URL is resolved-url parsed as an absolute URL.</t>
+      </section>
       <section title="Resolving a string as a query-relative URL">
-        <t>Given a string /relative-url/ and a ParsedURL /base-url/, let resolved-url
-        be
+        <t>Given a string relative-url and a ParsedURL base-url, let
+        resolved-url be
         <list style="symbols">
           <t>base-url's scheme</t>
           <t>concatenated with "://",</t>
@@ -360,8 +385,8 @@
         <t>The resolved URL is resolved-url parsed as an absolute URL.</t>
       </section>
       <section title="Resolving a string as a fragment-relative URL">
-        <t>Given a string /relative-url/ and a ParsedURL /base-url/, let resolved-url
-        be
+        <t>Given a string relative-url and a ParsedURL base-url, let
+        resolved-url be
         <list style="symbols">
           <t>base-url's scheme</t>
           <t>concatenated with "://",</t>
@@ -374,10 +399,6 @@
         </t>
 
         <t>The resolved URL is resolved-url parsed as an absolute URL.</t>
-      </section>
-      <section title="Resolving a string as a path-relative URL">
-        <t>TODO: Handle path-relative URLs.  This requires a bunch of path and
-        dot semantics.</t>
       </section>
     </section>
     <section title="Canonicalizing a URL">
